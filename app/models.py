@@ -9,6 +9,9 @@ class Movie(models.Model):
     release_date = models.CharField(max_length=4)
     imdb_rating = models.FloatField()
     duration = models.FloatField()
-    created_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=False,null=True,blank=True)
+    created_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,related_name='created_movies')  # Related_name ~> as we can see user model is used before and both the models are refering to the same user model so  in order to prevent clash we have passed a unique name to both
+    updated_by = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True,related_name='updated_movies')  # Related_name ~> as we can see user model is used before and both the models are refering to the same user model so  in order to prevent clash we have passed a unique name to both
+    

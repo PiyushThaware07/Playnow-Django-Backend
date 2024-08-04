@@ -8,10 +8,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["username"]
 
 class MovieSerializer(serializers.HyperlinkedModelSerializer):
-    created_by = serializers.HyperlinkedRelatedField(
-        view_name='user-detail', 
-        read_only=True,
-    )
+    created_by = serializers.ReadOnlyField(source='created_by.username')
+    updated_by = serializers.ReadOnlyField(source='created_by.username')
+    updated_at = serializers.ReadOnlyField()
     class Meta:
         model = Movie
         fields = "__all__"

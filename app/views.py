@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from . models import *
-from django.contrib.auth.models import User
 from rest_framework import viewsets
 from . serializers import *
+from django.utils import timezone
 
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
@@ -15,6 +15,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
 
     def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-    
-    
+        serializer.save(created_by=self.request.user,updated_by=None,updated_at=None)
+
+    def perform_update(self,serializer):
+        serializer.save(updated_by=self.request.user,updated_at=timezone.now())
