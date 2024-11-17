@@ -11,8 +11,7 @@ class Genre(models.Model):
     updated_at = models.DateTimeField(auto_now=False,null=True,blank=True)
     created_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,related_name='created_genre')
     updated_by = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True,related_name='updated_genre') 
-    def __str__(self):
-        return self.name
+
 
 
 class Movie(models.Model):

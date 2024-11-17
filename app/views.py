@@ -18,20 +18,21 @@ class UserViewSet(viewsets.ModelViewSet):
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user,updated_by=None,updated_at=None)
 
     def perform_update(self,serializer):
         serializer.save(updated_by=self.request.user,updated_at=timezone.now())    
 
-    @action(detail=True,methods=['get'])
+    @action(detail=True,methods=["get"])
     def movies(self,request,pk=None):
-        genre = Genre.objects.all()
+        genre = Genre.objects.get(pk=pk)
         print(genre)
+        result = Movie.objects.all()
+        result_serializer = MovieSerializer(result,many=True,context={"request":request})
         return Response({
-                "status" : "success",
-                "message" : pk
+            "status": "success",
+            "data": result_serializer.data
         })
       
 
